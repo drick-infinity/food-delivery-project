@@ -36,9 +36,9 @@ const Header = () => {
                   </h4>
                   <div className='mt-5'>
                     {/* Hover effect for scaling */}
-                    <a href="#_" className="relative z-10 inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-300 bg-indigo-600 rounded-md group ring-offset-2 ring-1 ring-indigo-300 hover:ring-offset-indigo-500 ease focus:outline-none animate-bounce">
+                    <a href="/fooddisplay" className="relative z-10 inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-300 bg-indigo-600 rounded-md group ring-offset-2 ring-1 ring-indigo-300 hover:ring-offset-indigo-500 ease focus:outline-none animate-bounce">
                       <span className="absolute top-0 left-0 w-20 h-8 -mt-1 -ml-12 transition-all duration-300 ease-out transform -rotate-45 -translate-x-1 bg-white opacity-10 group-hover:translate-x-0"></span>
-                      <span className="relative z-20 flex items-center text-lg">View Menu</span>
+                      <span className="relative z-20 flex items-center text-lg">Order Now</span>
                     </a>
                   </div>
                   

@@ -1,28 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
+import { StoreContext } from "../../context/StoreContext";
+import axios from "axios";
 
 const Login = ({ setShowLogin }) => {
+  const {url,setToken} = useContext(StoreContext)
   const [currState, setCurrState] = useState("Login");
-  const [modalOpen, setModalOpen] = useState(true); // Track modal visibility
+  const [modalOpen, setModalOpen] = useState(true); 
+  const [data,setData] = useState({
+    name:"",
+    email:"",
+    password:""
+  })
+
+  const onChangeHandler=(event) =>{
+    const name = event.target.name;
+    const value = event.target.value;
+    setData(data=>({...data,[name]:value}))
+  }
+
+  const onLogin = async(event)=>{
+    event.preventDefault();
+    let newUrl = url;
+    if(currState==="Login"){
+      newUrl += "/api/user/login"
+    }
+    else{
+      newUrl += "/api/user/register"
+    }
+    const response = await axios.post(newUrl,data);
+    if(response.data.success){
+        setToken(response.data.token);
+        localStorage.setItem("token",response.data.token)
+        setShowLogin(false)
+    }
+    else{
+      alert(response.data.message);
+    }
+  }
 
   useEffect(() => {
+    console.log(data);
     if (modalOpen) {
-      document.body.style.overflow = 'hidden'; // Disable scrolling on body
-    } else {
-      document.body.style.overflow = 'auto'; // Enable scrolling on body
+      document.body.style.overflow = 'hidden'; 
+      document.body.style.overflow = 'auto'; 
     }
 
     return () => {
-      document.body.style.overflow = 'auto'; // Cleanup on component unmount
+      document.body.style.overflow = 'auto'; 
     };
-  }, [modalOpen]);
+  }, [modalOpen,data]);
 
   return (
     <section className="absolute min-h-screen z-50 flex justify-center overflow-hidden items-center bg-[#00000090] inset-0 bg-black bg-opacity-50 backdrop-blur-md">
-      {/* Login Form */}
+    
       <div className="relative z-20 bg-white rounded-2xl shadow-xl p-8 max-w-lg w-full">
-        <form className="mx-auto">
-          {/* Close Icon */}
+        <form className="mx-auto" onSubmit={onLogin}>
           <img
             className="absolute top-6 right-6 w-5 h-5 cursor-pointer"
             onClick={() => {
@@ -42,22 +75,31 @@ const Login = ({ setShowLogin }) => {
             </p>
           </div>
           <div>
-            <input
-              type="text"
-              className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg font-normal rounded-md border-gray-300 border shadow-sm focus:outline-none px-4 mb-6"
-              placeholder="Username"
-            />
-            {currState === "Login" ? (
-              <></>
-            ) : (
-              <input
+          <input
+              name="email"
+              onChange={onChangeHandler}
+              value={data.email}
                 type="text"
                 className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg font-normal rounded-md border-gray-300 border shadow-sm focus:outline-none px-4 mb-6"
                 placeholder="Email"
               />
+            {currState === "Login" ? (
+              <></>
+            ) : (
+              <input
+              type="text"
+              name="name"
+              onChange={onChangeHandler}
+              value={data.name}
+              className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg font-normal rounded-md border-gray-300 border shadow-sm focus:outline-none px-4 mb-6"
+              placeholder="Username"
+            />
             )}
           </div>
           <input
+          name="password"
+          onChange={onChangeHandler}
+          value={data.password}
             type="password"
             className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg font-normal rounded-md border-gray-300 border shadow-sm focus:outline-none px-4 mb-1"
             placeholder="Password"
@@ -74,7 +116,7 @@ const Login = ({ setShowLogin }) => {
             href="#"
             className="flex justify-center text-gray-900 text-base font-medium leading-6"
           >
-            <button>
+            <button type="submit">
               {currState === "Sign Up" ? "Create Account" : "Login"}
             </button>
             &nbsp;|| Don’t have an account?

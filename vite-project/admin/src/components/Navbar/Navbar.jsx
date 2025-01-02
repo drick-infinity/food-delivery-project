@@ -5,7 +5,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 text-white">
-      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center mt-4">
         <img width="200px" height="20px" src={assets.gofood} alt="Logo"/>
         </div>

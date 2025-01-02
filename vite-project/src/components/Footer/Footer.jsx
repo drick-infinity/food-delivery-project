@@ -42,7 +42,7 @@ const Footer = () => {
             <img src={assets.location}/>
           </div>
           <div className="ml-[18px]">
-            <a href="mailto:help@lorem.com" className="text-[14px] font-medium text-[#fff]">Sub Nerul, Mumbia,
+            <a href="mailto:help@lorem.com" className="text-[14px] font-medium text-[#fff]">Ratanada, Rajasthan,
               India, 123456</a>
             <p className="text-[12px] font-medium text-white">Address</p>
           </div>
@@ -60,10 +60,10 @@ const Footer = () => {
                 href="#footer">Contact</a></li>
             <li className="mt-[15px]"><a
                 className="text-deutziawhite hover:text-deutziawhite/80 text-[15px] font-normal hover:font-semibold"
-                href="#menu">Menu</a></li>
+                href="/menu">Menu</a></li>
             <li className="mt-[15px]">
               <a className="text-deutziawhite hover:text-deutziawhite/80 text-[15px] font-normal hover:font-semibold"
-                href="/privacy-policy">Privcay policy</a></li>
+                href="/privacy-policy">Privacy policy</a></li>
           </ul>
         </div>
         <div className="mt-6 flex flex-col gap-4 sm:mt-0">

@@ -3,7 +3,7 @@ import { StoreContext } from "../../context/StoreContext";
 import {useNavigate} from 'react-router-dom';
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart,  getTotalCartAmount } = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart,  getTotalCartAmount ,url} = useContext(StoreContext);
   const navigate = useNavigate();
   return (
     <div className="p-6">
@@ -16,6 +16,7 @@ const Cart = () => {
         <p className="col-span-1">Total</p>
       </div>
       {food_list.map((item) => {
+        if (!item || !cartItems[item._id]) return null; 
         if (cartItems[item._id] > 0) {
           return (
             <div
@@ -25,7 +26,7 @@ const Cart = () => {
               {/* Item Image */}
               <div className="col-span-1">
                 <img
-                  src={item.image}
+                  src={url+"/images/"+item.image}
                   alt={item.name}
                   className="h-16 w-16 object-cover rounded-lg"
                 />
@@ -35,7 +36,7 @@ const Cart = () => {
               <p className="col-span-1 font-medium text-gray-700">{item.name}</p>
 
               {/* Price */}
-              <p className="col-span-1 text-gray-600">${item.price}</p>
+              <p className="col-span-1 text-gray-600">Rs.{item.price}</p>
 
               {/* Quantity */}
               <p className="col-span-1 text-gray-600">{cartItems[item._id]}</p>
@@ -43,7 +44,7 @@ const Cart = () => {
               {/* Total and Remove Button */}
               <div className="col-span-1 flex items-center justify-between">
                 <p className="text-gray-700 font-semibold">
-                  ${item.price * cartItems[item._id]}
+                  Rs.{item.price * cartItems[item._id]}
                 </p>
                 <button
                   onClick={() => removeFromCart(item._id)}
@@ -66,19 +67,19 @@ const Cart = () => {
             {/* Subtotal */}
             <div className="flex justify-between border-b pb-2">
               <p className="text-gray-600 text-lg">SubTotal</p>
-              <p className="text-gray-800 font-medium text-lg"> ${getTotalCartAmount()}</p>
+              <p className="text-gray-800 font-medium text-lg"> Rs.{getTotalCartAmount()}</p>
             </div>
 
             {/* Delivery Fee */} 
             <div className="flex justify-between border-b pb-2">
               <p className="text-gray-600 text-lg">Delivery Fee</p>
-              <p className="text-gray-800 font-medium text-lg">${getTotalCartAmount()===0?0:2}</p>
+              <p className="text-gray-800 font-medium text-lg">Rs.{getTotalCartAmount()===0?0:2}</p>
             </div>
 
             {/* Total */}
             <div className="flex justify-between font-semibold text-xl">
               <p className="text-gray-700">TOTAL</p>
-              <p className="text-gray-900">${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</p>
+              <p className="text-gray-900">Rs.{getTotalCartAmount()===0?0:getTotalCartAmount()+2}</p>
             </div>
           </div>
 
